@@ -53,7 +53,7 @@
 }
 
 .cardImageFront {
-  height: 70%;
+  height: 100%;
   background-image: url(https://cdn.pixabay.com/photo/2017/04/07/13/56/night-sky-2211032_1280.jpg);
   background-size: contain;
 }
@@ -77,4 +77,31 @@
 .feelsLike {
   color: lightslategrey;
   font-size: 1em;
+}
+.descriptionWeather {
+  color: rgb(145, 253, 253);
+  font-size: 1.5em;
+}
+
+.specialData {
+  height: 100%;
+  background-color: rgba(48, 48, 48, 0.522);
+  border-radius: 25px;
+}
+
+.hrLine {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgb(70, 70, 70);
+  width: 90%;
+}
+
+.term {
+  color: grey;
+  font-size: 0.8em;
+}
+
+.valueOutput {
+  font-size: 1.5em;
 }

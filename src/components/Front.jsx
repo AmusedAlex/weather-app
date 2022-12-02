@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Form, FormControl, InputGroup } from "react-bootstrap";
+import { Card, Col, Form, FormControl, InputGroup, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
-import { format, formatRelative, subDays, subMinutes } from "date-fns";
+import { format } from "date-fns";
+import { addSeconds } from "date-fns/esm";
 
 export default function Front() {
   const [location, setLocation] = useState({
@@ -12,23 +13,25 @@ export default function Front() {
     coord: {},
     weather: [{}],
     base: "",
-    main: {},
+    main: {
+      temp: 0,
+      feels_like: 0,
+    },
     visibility: null,
     wind: {},
     clouds: {
       all: null,
     },
     dt: null,
-    sys: {},
+    sys: {
+      sunrise: 0,
+      sunset: 0,
+    },
     timezone: 0,
     id: null,
     name: null,
     cod: null,
   });
-
-  function Capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
 
   const fetchWeather = async () => {
     if (location.input.length > 0) {
@@ -69,6 +72,10 @@ export default function Front() {
     fetchWeather();
   }, [weatherdata]);
 
+  const currentTime = addSeconds(new Date(), weatherdata.timezone - 3600);
+  const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 18000);
+  const sunrise = addSeconds(currentTime, weatherdata.sys.sunset - 3600);
+
   return (
     <Card className="cardOuter">
       {/* Search Area */}
@@ -93,34 +100,97 @@ export default function Front() {
             />
           </InputGroup>
         </Form>
-        {/* Date */}
-        <div>
-          <h2>{weatherdata.name}</h2>
-          <h3 className="text-white mt-4">
-            {Capitalize(
-              formatRelative(
-                subDays(new Date(), 0),
-                subMinutes(new Date(), weatherdata.timezone / 60)
-              )
-            )}
-          </h3>
-          <h6 className="text-white">{format(new Date(), "do MMMM yyyy")}</h6>
-        </div>
-        {/* Degrees */}
-        <div>
-          <h1 className="degreesH1 mt-4 mb-0 ">{weatherdata.main.temp}°C</h1>
-          <p className="feelsLike my-0">
-            Feels like {weatherdata.main.feels_like}°C
-          </p>
-        </div>
+        {weatherdata.visibility ? (
+          <div>
+            {/* Date and Location */}
+            <div>
+              <h2>
+                {weatherdata.name}, {weatherdata.sys.country}
+              </h2>
+              <h3 className="text-white mt-4">
+                {format(currentTime, "h:mm aa")}
+              </h3>
+              <h6 className="text-white">
+                {format(new Date(), "do MMMM yyyy")}
+              </h6>
+            </div>
+            {/* Degrees */}
+            <div className="mb-5">
+              <h1 className="degreesH1 mt-4 mb-0 ">
+                {weatherdata.main.temp.toFixed(1)}°C
+              </h1>
+              <p className="feelsLike my-0">
+                Feels like {weatherdata.main.feels_like.toFixed(1)}°C
+              </p>
+              <p className="descriptionWeather mt-4">
+                {weatherdata.weather[0].description}
+              </p>
+            </div>
+            {/* Special Data */}
+            <div className="specialData mt-2">
+              <p className="pt-4 mb-0">Coordinates</p>
+              <Row>
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Latitude</div>
+                    <div className="valueOutput">{weatherdata.coord.lat}</div>
+                  </div>
+                </Col>
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Longitude</div>
+                    <div className="valueOutput">{weatherdata.coord.lon}</div>
+                  </div>
+                </Col>
+              </Row>
+              <div className="d-flex justify-content-center">
+                <div className="hrLine my-3"></div>
+              </div>
+              <p className="mb-0">Wind</p>
+              <Row>
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Degrees</div>
+                    <div className="valueOutput">{weatherdata.wind.deg}°</div>
+                  </div>
+                </Col>
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Speed</div>
+                    <div className="valueOutput">
+                      {weatherdata.wind.speed} km/h
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <div className="d-flex justify-content-center">
+                <div className="hrLine my-3"></div>
+              </div>
+              <p className="mb-0">Sun</p>
+              <Row className="pb-5">
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Sunrise</div>
+                    <div className="valueOutput">
+                      {format(sunrise, "h:mm aa")}
+                    </div>
+                  </div>
+                </Col>
+                <Col xs={6}>
+                  <div>
+                    <div className="term">Sunset</div>
+                    <div className="valueOutput">
+                      {format(sunset, "h:mm aa")}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-      </Card.Body>
     </Card>
   );
 }
