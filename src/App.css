@@ -45,7 +45,22 @@
 }
 
 .cardOuter {
-  width: 400px;
+  width: 600px;
+  height: 800px;
+  border: 5px solid white !important;
+  border-radius: 25px !important;
+  overflow: hidden;
+}
+
+.contentFixed {
+  margin-top: 7vh;
+}
+
+.cardOuterFixed {
+  margin-top: 5vh;
+  margin-left: 5vh;
+  margin-right: 5vh;
+  width: 600px;
   height: 800px;
   border: 5px solid white !important;
   border-radius: 25px !important;
@@ -69,9 +84,14 @@
   background: none !important;
 }
 
+.locationH2 {
+  color: red;
+}
+
 .degreesH1 {
   font-size: 5em;
   line-height: 1;
+  color: rgb(227, 199, 251);
 }
 
 .feelsLike {
@@ -79,7 +99,7 @@
   font-size: 1em;
 }
 .descriptionWeather {
-  color: rgb(145, 253, 253);
+  color: rgb(227, 199, 251);
   font-size: 1.5em;
 }
 
@@ -104,4 +124,5 @@
 
 .valueOutput {
   font-size: 1.5em;
+  color: rgb(227, 199, 251);
 }

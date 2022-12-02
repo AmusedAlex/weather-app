@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Form, FormControl, InputGroup, Row } from "react-bootstrap";
-import { Search } from "react-bootstrap-icons";
+import { Card, Col, Row } from "react-bootstrap";
+
 import { format } from "date-fns";
 import { addSeconds } from "date-fns/esm";
 
-export default function Front() {
+export default function Tokyo() {
   const [location, setLocation] = useState({
-    input: "",
+    input: "New york",
   });
 
   const [weatherdata, setWeatherdata] = useState({
@@ -37,7 +37,7 @@ export default function Front() {
     if (location.input.length > 0) {
       try {
         let response = await fetch(
-          `http://api.openweathermap.org/data/2.5/weather?q=${location.input}&APPID=d8c1d59ba76391993c1907b87e3a58e5&units=metric`
+          `http://api.openweathermap.org/data/2.5/weather?q=New%20york&APPID=d8c1d59ba76391993c1907b87e3a58e5&units=metric`
         );
         if (response.ok) {
           let data = await response.json();
@@ -52,56 +52,35 @@ export default function Front() {
     }
   };
 
-  const onChangeHandler = (value) => {
-    setLocation({
-      input: value,
-    });
-  };
+  // const onChangeHandler = (value) => {
+  //   setLocation({
+  //     input: value,
+  //   });
+  // };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log("submitted");
-    fetchWeather();
-    setLocation({
-      input: "",
-    });
-  };
+  // const onSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log("submitted");
+  //   fetchWeather();
+  //   setLocation({
+  //     input: "",
+  //   });
+  // };
 
   useEffect(() => {
     console.log("mounted!!!!!!");
     fetchWeather();
-  }, [weatherdata]);
+  }, []);
 
   const currentTime = addSeconds(new Date(), weatherdata.timezone - 3600);
   const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 18000);
   const sunrise = addSeconds(currentTime, weatherdata.sys.sunset - 3600);
 
   return (
-    <Card className="cardOuter">
-      {/* Search Area */}
+    <Card className="cardOuterFixed">
       <div className="cardImageFront">
-        <Form onSubmit={onSubmitHandler}>
-          <InputGroup size="sm" className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Text
-                id="inputGroup-sizing-sm"
-                className="bgNone searchIcon text-white mt-5 ml-3"
-              >
-                <Search />
-              </InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              aria-label="Small"
-              aria-describedby="inputGroup-sizing-sm"
-              className="bgNone searchInputField mt-5 mr-3 text-white"
-              placeholder="Search for location"
-              value={location.input}
-              onChange={(e) => onChangeHandler(e.target.value)}
-            />
-          </InputGroup>
-        </Form>
         {weatherdata.visibility ? (
-          <div>
+          <div className="contentFixed">
             {/* Date and Location */}
             <div>
               <h2 className="locationH2">
