@@ -73,7 +73,7 @@ export default function Frankfurt() {
   }, []);
 
   const currentTime = addSeconds(new Date(), weatherdata.timezone - 3600);
-  const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 18000);
+  const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 25200);
   const sunrise = addSeconds(currentTime, weatherdata.sys.sunset - 3600);
 
   return (
@@ -102,6 +102,10 @@ export default function Frankfurt() {
                 Feels like {weatherdata.main.feels_like.toFixed(1)}°C
               </p>
               <p className="descriptionWeather mt-4">
+                <img
+                  src={`http://openweathermap.org/img/w/${weatherdata.weather[0].icon}.png`}
+                  alt={"icon"}
+                />{" "}
                 {weatherdata.weather[0].description}
               </p>
             </div>

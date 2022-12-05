@@ -73,7 +73,7 @@ export default function Front() {
   }, [weatherdata]);
 
   const currentTime = addSeconds(new Date(), weatherdata.timezone - 3600);
-  const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 18000);
+  const sunset = addSeconds(currentTime, weatherdata.sys.sunrise - 25200);
   const sunrise = addSeconds(currentTime, weatherdata.sys.sunset - 3600);
 
   return (
@@ -115,19 +115,24 @@ export default function Front() {
               </h6>
             </div>
             {/* Degrees */}
-            <div className="mb-5">
+            <div className="mb-2">
               <h1 className="degreesH1 mt-4 mb-0 ">
                 {weatherdata.main.temp.toFixed(1)}°C
               </h1>
               <p className="feelsLike my-0">
                 Feels like {weatherdata.main.feels_like.toFixed(1)}°C
               </p>
+
               <p className="descriptionWeather mt-4">
+                <img
+                  src={`http://openweathermap.org/img/w/${weatherdata.weather[0].icon}.png`}
+                  alt={"icon"}
+                />{" "}
                 {weatherdata.weather[0].description}
               </p>
             </div>
             {/* Special Data */}
-            <div className="specialData mt-2">
+            <div className="specialData">
               <p className="pt-4 mb-0">Coordinates</p>
               <Row>
                 <Col xs={6}>
