@@ -1,15 +1,14 @@
 import React from "react";
-import Frankfurt from "./Frankfurt";
+import Display from "./Display";
 
 import Front from "./Front";
-import Tokyo from "./Tokyo";
 
 export default function Home() {
   return (
     <>
-      <Tokyo />
+      <Display city={"tokyo"} />
       <Front />
-      <Frankfurt />
+      <Display city={"almaty"} />
     </>
   );
 }

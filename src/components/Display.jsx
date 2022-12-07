@@ -4,9 +4,9 @@ import { Card, Col, Row } from "react-bootstrap";
 import { format } from "date-fns";
 import { addSeconds } from "date-fns/esm";
 
-export default function Tokyo() {
+export default function Display(props) {
   const [location, setLocation] = useState({
-    input: "New york",
+    input: "New York",
   });
 
   const [weatherdata, setWeatherdata] = useState({
@@ -37,7 +37,7 @@ export default function Tokyo() {
     if (location.input.length > 0) {
       try {
         let response = await fetch(
-          `http://api.openweathermap.org/data/2.5/weather?q=New%20york&APPID=d8c1d59ba76391993c1907b87e3a58e5&units=metric`
+          `http://api.openweathermap.org/data/2.5/weather?q=${props.city}&APPID=d8c1d59ba76391993c1907b87e3a58e5&units=metric`
         );
         if (response.ok) {
           let data = await response.json();
