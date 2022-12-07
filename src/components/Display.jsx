@@ -6,7 +6,7 @@ import { addSeconds } from "date-fns/esm";
 
 export default function Display(props) {
   const [location, setLocation] = useState({
-    input: "New York",
+    input: props.city,
   });
 
   const [weatherdata, setWeatherdata] = useState({
